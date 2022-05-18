@@ -12,23 +12,11 @@ public class Concierge implements PapotageListener {
 	
 	@Override
 	public void getAllMessage() {
-		for (PapotageEvent PE : PapotageEvent.ListePapotages()) {
-			if (PE.getAuteur() instanceof Bavard) {
-				
-				PapotageEvent eX = new PapotageEvent(PE.getSujet(), PE.getCorps(), this);
-				System.out.println(eX);
-			}
-			
-		}
+		
 	}
 	
 	@Override
-	public void getMessage(PapotageEvent msg) {
-		
-		if (msg.getAuteur() instanceof Bavard) {
-			msg.setAuteur(this);
-		}
-		
+	public void getMessage(String ID) {
 		
 	}
 

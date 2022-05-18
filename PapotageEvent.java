@@ -6,17 +6,26 @@ public class PapotageEvent {
 	private String sujet;
 	private String corps;
 	private Object auteur;
-	public static ArrayList<PapotageEvent> Papotages = new ArrayList<>();
+	private String id;
+	private String nomAuteur;
+	public static ArrayList<PapotageEvent> PapotagesConcierge = new ArrayList<>();
+	public static ArrayList<PapotageEvent> PapotagesBavards = new ArrayList<>();
 	
-	public PapotageEvent(String sujet, String corps, Object auteur) {
+	public PapotageEvent(String sujet, String corps, Bavard auteur) {
 		this.setSujet(sujet);
 		this.setCorps(corps);
 		this.setAuteur(auteur);
-		Papotages.add(this);
+		this.setId(auteur.getNom() + "_" + auteur.getPrenom() + "_" + PapotagesConcierge.size() );
+		this.setNomAuteur(auteur.getNom() + " " + auteur.getPrenom());
+		PapotagesConcierge.add(this);
 	}
 	
 	public static ArrayList<PapotageEvent> ListePapotages () {
-		return Papotages;
+		return PapotagesConcierge;
+	}
+	
+	public static ArrayList<PapotageEvent> ListePapotagesB () {
+		return PapotagesBavards;
 	}
 	
 	public String getSujet() {
@@ -41,5 +50,21 @@ public class PapotageEvent {
 
 	public void setAuteur(Object auteur) {
 		this.auteur = auteur;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNomAuteur() {
+		return nomAuteur;
+	}
+
+	public void setNomAuteur(String nomAuteur) {
+		this.nomAuteur = nomAuteur;
 	}
 }

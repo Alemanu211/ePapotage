@@ -3,6 +3,6 @@ package ePapotage;
 public interface PapotageListener {
 	
 	void getAllMessage();
-	void getMessage(PapotageEvent msg);
+	void getMessage(String ID);
 	
 	}
