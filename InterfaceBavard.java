@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,13 +22,35 @@ import javax.swing.JTextArea;
 
 public class InterfaceBavard {
 
+	
+	public static void ListenerCheckbox (JCheckBox C, JComboBox<String> J) {
+		
+		J.removeAllItems();
+		J.addItem("Boite de reception");
+		for (PapotageEvent PE: PapotageEvent.ListePapotagesB()) {
+			if (C.isSelected() && PE.getSujet().equals("Loisir")) { 
+				J.addItem(PE.getId());
+			}
+			else if (C.isSelected() && PE.getSujet().equals("Sport")) { 
+				J.addItem(PE.getId());
+			}
+			else if (C.isSelected() && PE.getSujet().equals("Culture")) { 
+				J.addItem(PE.getId());
+			}
+			else if (C.isSelected() && PE.getSujet().equals("Divers")) { 
+				J.addItem(PE.getId());
+			}
+			
+		}
+	}
+	
 	public static void GestionBavard() {
 		
 		JFrame frame = new JFrame("Bavard");
 		
 		//Panel bavards en ligne
 		JPanel panelOnline = new JPanel();
-		panelOnline.setBounds(10,50,150,400);
+		panelOnline.setBounds(10,50,150,450);
 		panelOnline.setBackground(Color.lightGray);
 		
 		//Panel selection du bavard
@@ -41,7 +65,7 @@ public class InterfaceBavard {
 		
 		//Panel lecture message
 		JPanel readMessage = new JPanel();
-		readMessage.setBounds(170,290,350,160);
+		readMessage.setBounds(170,290,350,210);
 		readMessage.setBackground(Color.lightGray);
 
 		//Bavards en ligne
@@ -67,6 +91,7 @@ public class InterfaceBavard {
 			String str = B.getPrenom() + " " + B.getNom(); 
 			cb.addItem(str);
 		}
+		
 		JLabel labelSelect = new JLabel("Selection du bavard");
 		cb.setBounds(5,30,160,28);
 		labelSelect.setBounds(70,30,210,28);
@@ -75,7 +100,7 @@ public class InterfaceBavard {
 		
 		
 		
-		//Liste de thèmes
+		//Liste de thÃ¨mes
 		JRadioButton Loisir = new JRadioButton("Loisir"); 
 		JRadioButton Sport = new JRadioButton("Sport"); 
 		JRadioButton Culture = new JRadioButton("Culture");
@@ -140,17 +165,88 @@ public class InterfaceBavard {
 		
 		//Selecteur de message
 		JComboBox<String> cb2 = new JComboBox<String>();
-		cb2.addItem("");
-		for (PapotageEvent PE: PapotageEvent.ListePapotagesB()) {
-			cb2.addItem(PE.getId());
-		}
-		cb2.setBounds(150,30,160,20);
+		cb2.addItem("Boite de reception");
+		
+		cb2.setBounds(90,30,180,25);
 		readMessage.add(cb2);
 		
 		//TextArea ReadMsg
 		JTextArea LectureMsg = new JTextArea();
 		LectureMsg.setEditable(false);
+		LectureMsg.setBounds(25,70,300,130);
+		readMessage.add(LectureMsg);
+				
 		
+		//Check Listener A FAIRE
+		checkLoisir.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				
+				cb2.removeAllItems();
+				cb2.addItem("Boite de reception");
+				if (e.getStateChange() == 1){
+					LectureMsg.setText("LoisirU");
+					} else {LectureMsg.setText("LoisirB");}
+				
+				for (PapotageEvent PE: PapotageEvent.ListePapotagesB()) {
+					if (checkLoisir.isSelected() && PE.getSujet().equals("Loisir")) { 
+						cb2.addItem(PE.getId());
+					}
+					else if (checkSport.isSelected() && PE.getSujet().equals("Sport")) { 
+						cb2.addItem(PE.getId());
+					}
+					else if (checkCulture.isSelected() && PE.getSujet().equals("Culture")) { 
+						cb2.addItem(PE.getId());
+					}
+					else if (checkDivers.isSelected() && PE.getSujet().equals("Divers")) { 
+						cb2.addItem(PE.getId());
+					}
+					
+				}
+			}	
+		});
+		checkSport.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				LectureMsg.setText("aaar");
+				ListenerCheckbox (checkSport, cb2);
+			}	
+		});
+		checkCulture.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				ListenerCheckbox (checkCulture, cb2);
+			}	
+		});
+		checkDivers.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				ListenerCheckbox (checkDivers, cb2);
+			}	
+		});
+		
+		
+		
+		
+		
+		//Listener Combobox reading 
+		cb2.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				
+				
+				String s1 = cb2.getSelectedItem().toString();
+				for (PapotageEvent PE : PapotageEvent.ListePapotagesB()) {
+					if (s1.equals(PE.getId())) {
+						String s2 = "Theme : " + PE.getSujet() + "\n\n" + PE.getCorps() + "\n\nAuteur : " + PE.getNomAuteur();
+						LectureMsg.setText(s2);
+						break;
+					}
+				}
+				
+				
+			}	
+        });
 		
 		//Listener radiobutton send msg
 		sendBtn.addActionListener(new ActionListener() {
@@ -174,7 +270,7 @@ public class InterfaceBavard {
 				}
 				
 				if (theme == null) {
-					System.out.println("Veuillez choisir un thème");
+					System.out.println("Veuillez choisir un thÃ¨me");
 					//A FAIRE : NOTIF POUR DIRE VEUILLEZ CHOISIR UN THEME
 				}
 				
@@ -225,7 +321,7 @@ public class InterfaceBavard {
         panelMenu.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         frame.setResizable(false);
-		frame.setSize(550, 500);
+		frame.setSize(550, 550);
         frame.setVisible(true);
 		
 	}
