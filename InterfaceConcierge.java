@@ -22,7 +22,7 @@ public class InterfaceConcierge {
 			
 			JFrame frame = new JFrame("Concierge");
 
-	        //Liste déroulante
+	        //Liste dÃ©roulante
 			JTextArea message = new JTextArea();
 			JComboBox<String> cb = new JComboBox<String>();
 			JPanel panelCB = new JPanel();
@@ -68,15 +68,14 @@ public class InterfaceConcierge {
 					if (PapotageEvent.ListePapotages().size()>0) {
 						for (PapotageEvent PE : PapotageEvent.ListePapotages()) {
 							if (PE.getId().equals(ID)) {
-								PapotageEvent.ListePapotagesB().add(PE);
-								PapotageEvent.ListePapotages().remove(PE);
+								PapotageEvent.PapotageTrigger(PE);
 								cb.removeItem(ID);
-								message.setText("Message envoyé");
+								message.setText("Message envoyÃ©");
 							}
 						}
 					}
 				}
-	        });
+			});
 			
 			//Menu
 			JPanel panelMenu = new JPanel();
