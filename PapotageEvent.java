@@ -20,6 +20,11 @@ public class PapotageEvent {
 		PapotagesConcierge.add(this);
 	}
 	
+	public static void PapotageTrigger(PapotageEvent P) {
+		PapotagesBavards.add(P);
+		PapotagesConcierge.remove(P);
+	}
+	
 	public static ArrayList<PapotageEvent> ListePapotages () {
 		return PapotagesConcierge;
 	}
